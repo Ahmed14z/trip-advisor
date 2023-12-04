@@ -37,6 +37,12 @@ import loadingPan from 'src/assets/lotties/itinerary_loading_03.json';
 import { getIntroFromItinerary, getFormatedItinerary } from 'src/utils/rawParser';
 import sleep from 'src/utils/sleep';
 import DayList from 'src/components/DayList';
+import { useNavigate } from 'react-router-dom';
+
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import HomeIcon from '@mui/icons-material/Home';
+import GroupIcon from '@mui/icons-material/Group';
 
 const md = new MarkdownIt();
 
@@ -374,15 +380,44 @@ export default function Index() {
     setDisplayMessageList(prev => prev.concat(recvMsg));
     setSending(false);
   };
+  
+  const navigate = useNavigate();
+
+  const [selectedTab, setSelectedTab] = useState('home'); // Use 'home' as the default selected tab
+
+
+   const handleTabChange = (newValue) => {
+
+    setSelectedTab(newValue);
+
+    switch (newValue) {
+      case 'home':
+
+        navigate('/home');
+        break;
+      
+      case 'chats':
+        navigate('/chats'); // Adjust the destination route as needed
+        break;
+      // Add more cases for additional tabs if needed
+      default:
+        break;
+    }
+  };
+
 
   return (
     <Stack
       direction="column"
       sx={{
         overflowY: "hidden",
-        height: "100%",
+        height: "94%",
       }}
+      
+      
     >
+      
+      
       <Box sx={{
         width: '100%', height: 'inherit', overflowY: "scroll", scrollbarWidth: 'thin',
         '&::-webkit-scrollbar': {
@@ -398,6 +433,7 @@ export default function Index() {
           background: '#555'
         }
       }}>
+         
         <Stack
           direction="column"
           justifyContent="space-between"
@@ -409,6 +445,7 @@ export default function Index() {
           }}
           ref={containerRef}
         >
+          
           <Stack
             direction="column"
             justifyContent="space-between"
@@ -417,6 +454,7 @@ export default function Index() {
             mb={10}
             spacing={2}
           >
+            
             {!predefinedPrompted && (
               <Stack maxWidth="87%" alignItems="flex-start">
                 <Dialogue type="bot">
@@ -463,9 +501,15 @@ export default function Index() {
                           );
                         })}
                       </Stack>
+                      
+                      
                     )}
+                    
                   </Box>
+                  
+                  
                 );
+                
               })}
             {sending && (
               <Stack
@@ -488,13 +532,18 @@ export default function Index() {
                     : {}
                 }
               >
+                
                 <Lottie animationData={loadingPan} loop={true} style={{ width: 'clamp(40px,18vmin,80px)' }} />
                 <Typography fontFamily="Google Sans" fontWeight="300" fontSize="12px" color="#614646">
                   loading your itinerary...
                 </Typography>
+                
               </Stack>
+              
             )}
+            
           </Stack>
+          
           {!predefinedPrompted && (
             <Stack direction="column-reverse" alignItems="flex-start" width="100%" spacing={2}>
               {predefinedPrompt &&
@@ -510,24 +559,71 @@ export default function Index() {
                     </PredefineMessage>
                   </Box>
                 ))}
+                
             </Stack>
+            
           )}
+          
         </Stack>
+        
 
         {openPlaceView && (
           <PlaceView onClickPlace={handleOnClickPlace} {...placeView} onClose={handleClickClosePlaceView} />
         )}
         {openPlaceCard && <PlaceCard {...placeDetails} onClose={handleClickClosePlaceCard} />}
       </Box>
+    
       <Stack
         width="100%"
         direction="row"
         position="absolute"
+
         left="0"
-        bottom="0"
+        
+        bottom="7%"
+          // Adjust the bottom property to create space
+        >
+          
+      <ChatInput sending={sending} inputRef={inputRef} onSendMessage={handleOnSendMsg}  
+               // Adjust the right margin as needed
+ />
+       </Stack>
+
+      <Stack
+        width="100%"
+        direction="row"
+        position="absolute"
+
+        left="0"
+        
+        bottom="0"  // Adjust the bottom property to create space
+        >
+        
+      
+        
+            
+
+        <BottomNavigation
+        value={selectedTab}
+        onChange={(event, newValue) => handleTabChange(newValue)} // Pass only the newValue
+        showLabels
+        sx={{
+          width: '100%',
+          position: 'absolute',
+          bottom: 0,
+          backgroundColor: '#f1f1f1', // Adjust the background color as needed
+        }}
       >
-        <ChatInput sending={sending} inputRef={inputRef} onSendMessage={handleOnSendMsg} />
+        <BottomNavigationAction label="Home" value="home" icon={<HomeIcon />} />
+        <BottomNavigationAction label="Chats" value="chats" icon={<GroupIcon />} />
+        {/* Add more tabs as needed */}
+      </BottomNavigation>
       </Stack>
+      
     </Stack>
+    
+
+
+    
   );
 }

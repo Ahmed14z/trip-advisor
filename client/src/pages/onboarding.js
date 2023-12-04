@@ -40,7 +40,7 @@ const OnBoarding = () => {
         }}
       >
         <Stack position="absolute" bottom="40%" alignItems="center" sx={{ zIndex: 1000 }} justifyContent="center" width="100%" direction="row" spacing={1}>
-          <Link href="/chat" sx={{ textDecoration: 'none' }}>
+          <Link href="/home" sx={{ textDecoration: 'none' }}>
             <Fab
 
               sx={{

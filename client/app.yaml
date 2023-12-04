@@ -19,7 +19,11 @@ handlers:
   static_files: dist/index.html
   upload: dist/index.html
 
-- url: /chat
+- url: /home
+  static_files: dist/index.html
+  upload: dist/index.html
+
+- url: /chats
   static_files: dist/index.html
   upload: dist/index.html
 

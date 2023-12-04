@@ -17,12 +17,15 @@
 import React from 'react';
 import { useRoutes } from 'react-router-dom';
 import Index from 'src/pages';
+import Chat from 'src/pages/chat';
+
 import Onboarding from 'src/pages/onboarding';
+import { useNavigate } from 'react-router-dom';
 
 export default function Router() {
   return useRoutes([
     {
-      path: 'chat',
+      path: 'home',
       element: (
           <Index />
       ),
@@ -33,6 +36,12 @@ export default function Router() {
           <Onboarding/>
 
       )
+    },
+    {
+      path: '/chats',
+      element: (
+          <Chat />
+      ),
     }
   ]);
 }
