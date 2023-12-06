@@ -107,7 +107,7 @@ def create_user_message(
     chat_response = generate_chat.generate(input_text=input.text)
     print(chat_response)
     # Assuming you want to use the generated chat response in your API response
-
+    
     # Assuming you want to use the generated chat response in your API response
     return CreateUserMessageResponse(success=True, code=200)
 class MessageEvent(BaseModel):
